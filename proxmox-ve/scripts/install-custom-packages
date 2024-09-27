@@ -1,0 +1,18 @@
+#!/bin/bash -eux
+#
+# install-custom-packages - Install Proxmox VE packages
+#
+
+export DEBIAN_FRONTEND=noninteractive
+
+# Update package lists
+apt-get update
+
+# Preconfigure postfix to avoid interactive prompts
+echo "postfix postfix/main_mailer_type select No configuration" | debconf-set-selections
+
+# Install Proxmox VE and related packages
+apt-get install -y proxmox-ve postfix open-iscsi
+
+# Remove unused packages
+apt-get autoremove -y
